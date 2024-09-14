@@ -160,13 +160,13 @@ mqttClient.onMessage((topic, message) => {
 ```
 ## Versioning
 
-We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ubyte-source/certificate-authority/tags). 
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ubyte-source/node-mqtt-client/tags). 
 
 ## Authors
 
 * **Paolo Fabris** - *Initial work* - [ubyte.it](https://ubyte.it/)
 
-See also the list of [contributors](https://github.com/ubyte-source/certificate-authority/blob/main/CONTRIBUTORS.md) who participated in this project.
+See also the list of [contributors](https://github.com/ubyte-source/node-mqtt-client/blob/main/CONTRIBUTORS.md) who participated in this project.
 
 ## License
 
