@@ -126,74 +126,47 @@ Returns the loaded certificates.
 
 ## Example
 
-### 1. Setting Up the MQTT Client
-
-To set up the MQTT client, create an instance and set the host, port, and protocol properties.
-
-```javascript
-const mqttClient = new MQTTClient();
-mqttClient.host = 'broker.fabris.io';
-mqttClient.port = 8883;
-mqttClient.hostProtocol = MQTTClient.Protocol.MQTTS;
-```
-
-### 2. Loading Certificates
-
-Load the necessary certificates using the `CertificateManager` instance:
-
-```javascript
-mqttClient.certificateManager.loadCertificates(
-  'authority.pem',   // CA certificate path
-  'certificate.pem', // Client certificate path
-  'key.pem'          // Private key path
-);
-```
-
-### 3. Connecting to the MQTT Broker
-
-Finally, connect to the MQTT broker:
-
-```javascript
-mqttClient.connect();
-```
-
-### 4. Subscribing to a Topic
+#### 1. Subscribing to a Topic
 
 Subscribe to a topic to receive messages:
 
 ```javascript
 mqttClient.subscribe('your/topic', { qos: 1 }, (err, granted) => {
-    if (err) {
-        console.error('Subscription error:', err);
-    } else {
-        console.log('Subscribed to topic:', granted);
-    }
+    if (err) console.error('Subscription error:', err);
+    // Anything you want
 });
 ```
 
-### 5. Publishing a Message
+#### 2. Publishing a Message
 
 Publish a message to a specific topic:
 
 ```javascript
 mqttClient.publish('your/topic', 'Hello MQTT!', { qos: 1, retain: true }, (err) => {
-    if (err) {
-        console.error('Error publishing message:', err);
-    } else {
-        console.log('Message published successfully.');
-    }
+    if (err) console.error('Error publishing message:', err);
+    // Anything you want
 });
 ```
 
-### 6. Handling Incoming Messages
+#### 3. Handling Incoming Messages
 
 Register a callback to handle incoming messages:
 
 ```javascript
 mqttClient.onMessage((topic, message) => {
     console.log(`Received message on topic ${topic}: ${message.toString()}`);
+    // Anything you want
 });
 ```
+## Versioning
+
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ubyte-source/certificate-authority/tags). 
+
+## Authors
+
+* **Paolo Fabris** - *Initial work* - [ubyte.it](https://ubyte.it/)
+
+See also the list of [contributors](https://github.com/ubyte-source/certificate-authority/blob/main/CONTRIBUTORS.md) who participated in this project.
 
 ## License
 
