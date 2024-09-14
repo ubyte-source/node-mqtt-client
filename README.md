@@ -1,1 +1,182 @@
-# node-mqtt-client
+
+# MQTT Client
+
+A Node.js MQTT client for managing secure MQTT connections with certificate-based authentication.
+
+## Features
+
+- Connect to MQTT brokers securely using TLS/SSL.
+- Manage certificates with a built-in certificate manager.
+- Easily configure and handle MQTT connections, subscriptions, and messages.
+
+## Installation
+
+Install the package via npm:
+
+```bash
+npm install node-mqtt-client
+```
+
+## Libraries Used
+
+This project makes use of the following libraries:
+
+- **[fs](https://nodejs.org/api/fs.html):** File system module to handle reading and writing of files.
+- **[mqtt](https://www.npmjs.com/package/mqtt):** MQTT.js library to handle MQTT connections and communication.
+- **[node-forge](https://www.npmjs.com/package/node-forge):** Library for creating and managing X.509 certificates.
+
+## Usage
+
+Here's an example of how to use the MQTT client:
+
+```javascript
+const { MQTTClient } = require('node-mqtt-client');
+
+const mqttClient = new MQTTClient();
+mqttClient.host = 'broker.fabris.io';
+mqttClient.port = 8883;
+mqttClient.hostProtocol = MQTTClient.Protocol.MQTTS;
+mqttClient.certificateManager.loadCertificates(
+  'authority.pem',
+  'certificate.pem',
+  'key.pem'
+);
+mqttClient.connect();
+```
+
+### Configuration Parameters
+
+| Parameter             | Type                     | Description                                                         | Default                  |
+|-----------------------|--------------------------|---------------------------------------------------------------------|--------------------------|
+| `host`                | `string`                 | The MQTT broker's host address.                                     | `'your-mqtt-broker-host'`|
+| `port`                | `number`                 | The port to connect to on the MQTT broker.                          | `8883`                   |
+| `hostProtocol`        | `string`                 | The protocol to use (`mqtt`, `mqtts`, `ws`, `wss`).                 | `mqtts`                  |
+
+## Public Methods
+
+### MQTTClient Methods
+
+#### `connect()`
+
+Connects to the MQTT broker using the loaded certificates.
+
+**Returns:**  
+`MQTTClient` - The instance of MQTTClient.
+
+#### `subscribe(topic, callback)`
+
+Subscribes to a topic on the MQTT broker.
+
+- `topic` (`string`): The topic to subscribe to.
+- `callback` (`Function`): The callback function to handle the subscription response.
+
+**Returns:**  
+`MQTTClient` - The instance of MQTTClient.
+
+#### `publish(topic, message)`
+
+Publishes a message to a topic on the MQTT broker.
+
+- `topic` (`string`): The topic to publish to.
+- `message` (`string|Buffer`): The message to publish.
+
+**Returns:**  
+`MQTTClient` - The instance of MQTTClient.
+
+#### `onMessage(callback)`
+
+Registers a callback for incoming messages.
+
+- `callback` (`Function`): The callback function to handle incoming messages.
+
+**Returns:**  
+`MQTTClient` - The instance of MQTTClient.
+
+### CertificateManager Methods
+
+#### `loadCertificates(ca, certificate, key)`
+
+Loads certificates from the specified paths.
+
+- `ca` (`string`): Path to the CA certificate.
+- `certificate` (`string`): Path to the client certificate.
+- `key` (`string`): Path to the private key.
+
+**Returns:**  
+`CertificateManager` - The instance of CertificateManager.
+
+#### `getCertificates()`
+
+Returns the loaded certificates.
+
+**Returns:**  
+`{ cert: Buffer, key: Buffer, ca: Buffer }` - The loaded certificates.
+
+## Example
+
+### 1. Setting Up the MQTT Client
+
+To set up the MQTT client, create an instance and set the host, port, and protocol properties.
+
+```javascript
+const mqttClient = new MQTTClient();
+mqttClient.host = 'broker.fabris.io';
+mqttClient.port = 8883;
+mqttClient.hostProtocol = MQTTClient.Protocol.MQTTS;
+```
+
+### 2. Loading Certificates
+
+Load the necessary certificates using the `CertificateManager` instance:
+
+```javascript
+mqttClient.certificateManager.loadCertificates(
+  'authority.pem',   // CA certificate path
+  'certificate.pem', // Client certificate path
+  'key.pem'          // Private key path
+);
+```
+
+### 3. Connecting to the MQTT Broker
+
+Finally, connect to the MQTT broker:
+
+```javascript
+mqttClient.connect();
+```
+
+### 4. Subscribing to a Topic
+
+Subscribe to a topic to receive messages:
+
+```javascript
+mqttClient.subscribe('your/topic', (err, granted, fullTopic) => {
+    if (err) {
+        console.error('Subscription error:', err);
+    } else {
+        console.log(`Subscribed to topic: ${fullTopic}`);
+    }
+});
+```
+
+### 5. Publishing a Message
+
+Publish a message to a specific topic:
+
+```javascript
+mqttClient.publish('your/topic', 'Hello MQTT!');
+```
+
+### 6. Handling Incoming Messages
+
+Register a callback to handle incoming messages:
+
+```javascript
+mqttClient.onMessage((topic, message) => {
+    console.log(`Received message on topic ${topic}: ${message.toString()}`);
+});
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/ubyte-source/node-mqtt-client/blob/main/LICENSE) file for details.
