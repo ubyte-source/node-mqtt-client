@@ -79,6 +79,18 @@ Subscribes to a topic or topics on the MQTT broker.
 **Returns:**  
 `MQTTClient` - The instance of MQTTClient.
 
+#### `unsubscribe(topic, options, callback)`
+
+Unsubscribes from a topic or topics on the MQTT broker.
+
+- `topic` (`string|string[]`): The topic(s) to unsubscribe from. Can be a single topic (string) or an array of topics (string[]).
+- `options` (`Object`): Optional parameters for the unsubscription.
+  - `nosuffix` (`boolean`): If set to `true`, does not prepend the common name to the topic.
+- `callback` (`Function`): The callback function to handle the unsubscription response. Called with `(err, topic)` parameters.
+
+**Returns:**  
+`MQTTClient` - The instance of MQTTClient.
+
 #### `publish(topic, message, options, callback)`
 
 Publishes a message to a topic on the MQTT broker.
